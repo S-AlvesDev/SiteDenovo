@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{style.css}">
+  <title>Ludiflex | Login & Registration</title>
+</head>
+<style>
+  /* POPPINS FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  background-color: #1b80f5;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 110vh;
+  background: rgba(39, 39, 39, 0.4);
+}
+
+/* Navbar */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(rgba(39,39,39,0.6), transparent);
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+.nav-logo p {
+  margin: 0;
+  color: transparent;
+  font-size: 25px;
+  font-weight: 600;
+  background-image: url('LogoTurma2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 200px;  /* Tamanho reduzido para responsividade */
+  height: 100px;
+}
+.nav-links ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin-left: 10px;
+}
+.nav-links ul li {
+  margin: 0 10px; /* Espaçamento reduzido */
+}
+.nav-links ul li .link {
+  text-decoration: none;
+  font-weight: 500;
+  color: #fff;
+  padding-bottom: 15px;
+}
+.link:hover,
+.active {
+  border-bottom: 2px solid #fff;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+.nav-button {
+  display: flex;
+  align-items: center;
+}
+.nav-button .btn {
+  width: 130px;
+  height: 40px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-left: 10px;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+#registerBtn {
+  margin-left: 15px;
+}
+.btn.white-btn {
+  background: rgba(255, 255, 255, 0.7);
+}
+.btn.white-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.nav-menu-btn {
+  display: none;
+}
+
+/* Form Box & Containers */
+.form-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 512px;
+  height: 420px;
+  overflow: hidden;
+  z-index: 2;
+}
+.login-container,
+.register-container {
+  position: absolute;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.5s ease-in-out;
+}
+.login-container {
+  left: 4px;
+}
+.register-container {
+  right: -520px;
+}
+.top span {
+  color: #fff;
+  font-size: small;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+.top span a {
+  font-weight: 500;
+  color: #fff;
+  margin-left: 5px;
+}
+header {
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+  padding: 10px 0 30px 0;
+}
+.two-forms {
+  display: flex;
+  gap: 10px;
+}
+.input-field {
+  font-size: 15px;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  height: 50px;
+  width: 100%;
+  padding: 0 10px 0 45px;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  transition: 0.2s ease;
+}
+.input-field:hover,
+.input-field:focus {
+  background: rgba(255,255,255,0.25);
+}
+::-webkit-input-placeholder {
+  color: #fff;
+}
+.input-box i {
+  position: relative;
+  top: -35px;
+  left: 17px;
+  color: #fff;
+}
+.submit {
+  font-size: 15px;
+  font-weight: 500;
+  color: black;
+  height: 45px;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.submit:hover {
+  background: rgba(255,255,255,0.5);
+  box-shadow: 1px 5px 7px 1px rgba(0,0,0,0.2);
+}
+.two-col {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  font-size: small;
+  margin-top: 10px;
+}
+.two-col .one {
+  display: flex;
+  gap: 5px;
+}
+.two label a {
+  text-decoration: none;
+  color: #fff;
+}
+.two label a:hover {
+  text-decoration: underline;
+}
+
+/* Seção de Boas-Vindas (Hero) */
+.welcome-section {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 10px;
+  margin: 40px auto;
+  width: 80%;
+  max-width: 800px;
+}
+.welcome-section h1 {
+  font-size: 36px;
+  color: #1b80f5;
+  margin-bottom: 20px;
+}
+.welcome-section p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Botão de Logout */
+#logoutBtn {
+  display: inline-block;
+  background: #ff4d4d;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+#logoutBtn:hover {
+  background: #e60000;
+}
+/*v*/
+
+/* Rodapé */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(39,39,39,0.8);
+  color: #fff;
+  font-size: 14px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+/*Responsitividade*/
+@media screen and (max-width: 765) {
+    .nav {
+        display: none;
+    }
+}
+</style>
+<body>
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="nav-left">
+      <div class="nav-logo">
+        <p>LOGO .</p>
+      </div>
+      <div class="nav-links">
+        <ul>
+            <li><a href="#" class="link active" id="homeBtn">Início</a></li>
+            <!-- Itens adicionais inicialmente ocultos -->
+            <li class="additional" style="display: none;"><a href="#" class="link" id="cardapioBtn">Cardápio</a></li>
+            <li class="additional" style="display: none;"><a href="{{ url_for('mural') }}" class="link" id="muralBtn">Mural da Turma</a></li>
+            <li class="additional" style="display: none;"><a href="#" class="link" id="surveyBtn">Pesquisa de Satisfação</a></li>
+        </ul>
+    </div>
+    </div>
+    <div class="nav-right">
+      <!-- Botões de acesso -->
+      <div class="nav-button" id="navButton">
+        <button class="btn white-btn" id="loginBtn" onclick="login()">Entrar</button>
+        <button class="btn" id="registerBtn" onclick="register()">Registrar</button>
+      </div>
+      <!-- Botão de logout (inicialmente oculto) -->
+      <div class="nav-button" id="logoutContainer" style="display: none;">
+        <button class="btn" id="logoutBtn" onclick="logout()">Sair</button>
+      </div>
+      <div class="nav-menu-btn">
+        <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrapper">
+    <!-- Caixa dos formulários (login e registro) -->
+    <div class="form-box" id="formBox">
+      <!-- Login -->
+      <div class="login-container" id="login">
+        <div class="top">
+          <span>Não tem uma conta? <a href="#" onclick="register()">Cadastre-se</a></span>
+          <header>Entrar</header>
+        </div>
+        <form id="loginForm" method="POST" action="/login" onsubmit="submitLogin(event)">
+          <div class="input-box">
+            <input type="text" class="input-field" placeholder="Nome de usuário ou email" name="email" id="loginEmail" required>
+            <i class="bx bx-user"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" class="input-field" placeholder="Senha" name="senha" id="loginPassword" required>
+            <i class="bx bx-lock-alt"></i>
+          </div>
+          <div class="input-box">
+            <input type="submit" class="submit" value="Entrar">
+          </div>
+          <div class="two-col">
+            <div class="one">
+              <input type="checkbox" id="login-check">
+              <label for="login-check"> Lembrar de mim</label>
+            </div>
+            <div class="two">
+              <label><a href="#">Esqueceu sua senha?</a></label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Registro -->
+      <div class="register-container" id="register">
+        <div class="top">
+          <span>Tem uma conta? <a href="#" onclick="login()">Faça login</a></span>
+          <header>Cadastro</header>
+        </div>
+        <form id="registerForm" method="POST" action="/register" onsubmit="submitRegister(event)">
+          <div class="two-forms">
+            <div class="input-box">
+              <input type="text" class="input-field" placeholder="Nome" name="nome" id="regNome" required>
+              <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+              <input type="text" class="input-field" placeholder="Sobrenome" name="sobrenome" id="regSobrenome" required>
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+          <div class="input-box">
+            <input type="email" class="input-field" placeholder="Email" name="email" id="regEmail" required>
+            <i class="bx bx-envelope"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" class="input-field" placeholder="Senha" name="senha" id="regPassword" required>
+            <i class="bx bx-lock-alt"></i>
+          </div>
+          <div class="input-box">
+            <input type="submit" class="submit" value="Registrar">
+          </div>
+          <div class="two-col">
+            <div class="one">
+              <input type="checkbox" id="register-check">
+              <label for="register-check"> Lembrar de mim</label>
+            </div>
+            <div class="two">
+              <label><a href="#">Termos & condições</a></label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Seção de Boas-Vindas (Hero) -->
+    <div class="welcome-section" id="welcomeSection" style="display: none;">
+      <h1>Bem-vindo, <span id="userName"></span>!</h1>
+      <p>Descubra as funcionalidades exclusivas do nosso site e aproveite uma experiência única.</p>
+      <p>Explore conteúdos personalizados e interaja com nossa comunidade para se manter sempre atualizado.</p>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <p>© 2025 Samuel Alves. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Verifica se o usuário está logado ao carregar a página
+    window.onload = function() {
+      const loggedIn = localStorage.getItem('loggedIn');
+      const username = localStorage.getItem('username');
+  
+      if (loggedIn === 'true') {
+        document.getElementById('userName').textContent = username;
+        document.getElementById('welcomeSection').style.display = "block";
+        document.getElementById('formBox').style.display = "none";
+        document.getElementById('navButton').style.display = "none";
+        document.getElementById('logoutContainer').style.display = "block";
+        
+        // Exibe itens adicionais do menu
+        document.querySelectorAll(".additional").forEach(function(el) {
+          el.style.display = "block";
+        });
+      }
+    }
+  
+    function submitLogin(event) {
+      event.preventDefault();
+      var email = document.getElementById('loginEmail').value;
+      var senha = document.getElementById('loginPassword').value;
+      if (email.trim() === "" || senha.trim() === "") {
+        alert('Por favor, preencha todos os campos!');
+        return;
+      }
+      loginWithCredentials(email, senha);
+    }
+  
+    function loginWithCredentials(email, senha) {
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email, senha: senha }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('username', data.username);
+  
+          document.getElementById('userName').textContent = data.username;
+          document.getElementById('welcomeSection').style.display = "block";
+          document.getElementById('formBox').style.display = "none";
+          document.getElementById('navButton').style.display = "none";
+          document.getElementById('logoutContainer').style.display = "block";
+          
+          // Exibe itens adicionais do menu
+          document.querySelectorAll(".additional").forEach(function(el) {
+            el.style.display = "block";
+          });
+        } else {
+          alert('Usuário ou senha inválidos.');
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao realizar login:', error);
+      });
+    }
+  
+    function submitRegister(event) {
+      event.preventDefault();
+      var nome = document.getElementById('regNome').value.trim();
+      var sobrenome = document.getElementById('regSobrenome').value.trim();
+      var email = document.getElementById('regEmail').value.trim();
+      var senha = document.getElementById('regPassword').value.trim();
+      if (nome === "" || sobrenome === "" || email === "" || senha === "") {
+        alert('Por favor, preencha todos os campos!');
+        return;
+      }
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nome: nome, sobrenome: sobrenome, email: email, senha: senha }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          loginWithCredentials(email, senha);
+        } else {
+          alert('Erro ao registrar: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao registrar:', error);
+      });
+    }
+  
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('username');
+      
+      document.getElementById('welcomeSection').style.display = "none";
+      document.getElementById('formBox').style.display = "flex";
+      document.getElementById('logoutContainer').style.display = "none";
+      document.getElementById('navButton').style.display = "flex";
+      document.querySelectorAll(".additional").forEach(function(el) {
+        el.style.display = "none";
+      });
+    }
+  
+    function login() {
+      document.getElementById('login').style.left = "4px";
+      document.getElementById('register').style.right = "-520px";
+      document.getElementById('login').style.opacity = 1;
+      document.getElementById('register').style.opacity = 0;
+    }
+  
+    function register() {
+      document.getElementById('login').style.left = "-510px";
+      document.getElementById('register').style.right = "5px";
+      document.getElementById('login').style.opacity = 0;
+      document.getElementById('register').style.opacity = 1;
+    }
+  </script>
+</body>
+</html>

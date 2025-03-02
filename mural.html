@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mural da Turma - Portal IFRN Clone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+  <!-- CSS Embutido -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #1b80f5;
+      padding: 10px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Navbar */
+    .nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(rgba(39,39,39,0.6), transparent);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo p {
+      margin: 0;
+      color: transparent;
+      font-size: 25px;
+      font-weight: 600;
+      background-image: url('/static/LogoTurma2.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 200px;  /* Tamanho reduzido para responsividade */
+      height: 100px;
+    }
+
+    .nav-links ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      margin-left: 10px;
+    }
+
+    .nav-links ul li {
+      margin: 0 10px; /* Espaçamento reduzido */
+    }
+
+    .nav-links ul li .link {
+      text-decoration: none;
+      font-weight: 500;
+      color: #fff;
+      padding-bottom: 15px;
+    }
+
+    .link:hover,
+    .active {
+      border-bottom: 2px solid #fff;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-button {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-button .btn {
+      width: 130px;
+      height: 40px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.4);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-left: 10px;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    #registerBtn {
+      margin-left: 15px;
+    }
+
+    .btn.white-btn {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .btn.white-btn:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .nav-menu-btn {
+      display: none;
+    }
+
+    .mural-section, .photos-section {
+      padding: 20px;
+    }
+
+    .mural-section h1, .photos-section h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .mural-container, .photos-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .post, .photo-item {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    .post h2, .post p, .photo-item figcaption p {
+      margin: 10px 0;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* Rodapé */
+    .footer {
+      text-align: center;
+      padding: 1px;
+      background: rgb(39, 39, 39);
+      color: #fff;
+      font-size: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Botão de Logout */
+    #logoutBtn {
+      display: inline-block;
+      background: #ff4d4d;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    #logoutBtn:hover {
+      background: #e60000;
+    }
+  </style>
+</head>
+<script>
+  // Função para verificar o status de login ao carregar a página
+  function checkLoginStatus() {
+    const loggedIn = localStorage.getItem("loggedIn");
+    if (loggedIn === "true") {
+      document.getElementById("logoutContainer").style.display = "block";
+      document.querySelectorAll(".additional").forEach(function(el) {
+        el.style.display = "block";
+      });
+    } else {
+      document.getElementById("logoutContainer").style.display = "none";
+      document.querySelectorAll(".additional").forEach(function(el) {
+        el.style.display = "none";
+      });
+    }
+  }
+
+  // Função para fazer logout
+  function logout() {
+    localStorage.setItem("loggedIn", "false");
+    checkLoginStatus(); // Atualiza o estado do login
+    window.location.href = "{{ url_for('home') }}"; // Redireciona para a página inicial
+  }
+
+  // Função para simular login (você pode adaptar isso para seu sistema real)
+  function login() {
+    localStorage.setItem("loggedIn", "true");
+    checkLoginStatus(); // Atualiza o estado do login
+    window.location.href = "{{ url_for('home') }}"; // Redireciona para a página inicial
+  }
+
+  window.onload = checkLoginStatus; // Verifica o status de login ao carregar a página
+</script>
+<body>
+  <!-- Header -->
+  <header>
+    <!-- Logo e Navbar -->
+    <div class="nav-left">
+      <div class="nav-logo">
+        <p>LOGO</p>
+      </div>
+      <!-- Div para o botão de logout -->
+      <div class="nav-button" id="logoutContainer" style="display: none;">
+        <button class="btn" id="logoutBtn" onclick="logout()">Sair</button>
+      </div>
+    </div>
+
+    <!-- Navbar Links -->
+    <div class="nav-links">
+      <ul>
+        <li><a href="{{ url_for('home') }}" class="link active" id="homeBtn">Início</a></li>
+        <li class="additional" style="display: none;"><a href="#" class="link" id="cardapioBtn">Cardápio</a></li>
+        <li class="additional" style="display: none;"><a href="{{ url_for('mural') }}" class="link" id="muralBtn">Mural da Turma</a></li>
+        <li class="additional" style="display: none;"><a href="#" class="link" id="surveyBtn">Pesquisa de Satisfação</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Mural da Turma -->
+  <section class="mural-section">
+    <h1>Mural da Turma</h1>
+    <div class="mural-container">
+      <div class="post">
+        <h2>Bem-vindo ao Mural</h2>
+        <p>Este é o espaço para compartilhar notícias, avisos e eventos importantes da turma.</p>
+        <div class="date">01/03/2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fotos da Turma -->
+  <section class="photos-section">
+    <h1>Fotos da Turma</h1>
+    <div class="photos-container">
+      <figure class="photo-item">
+        <img src="../static/foto1.jpg" alt="Foto da Turma 1">
+        <figcaption>
+          <p>Despedida da Professora Jordânia</p>
+          <span>24/02/2025</span>
+        </figcaption>
+      </figure>
+      <figure class="photo-item">
+        <img src="../static/foto2.jpg" alt="Foto da Turma 2">
+        <figcaption>
+          <p>Despedida do Professor de Química Suervy!</p>
+          <span>19/02/2025</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <p>© 2025 Samuel Alves. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
